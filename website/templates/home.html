@@ -1,17 +1,110 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="col-md-6 offset-md-3">
-
 {% if user.is_authenticated %}
 
-<h1>Hello world!</h1>
+<center> <h1>FILMLOGIC: Logging the Cinematic Universe I've Ventured</h1> </center> <br/>
+
+<style>
+  .carousel-item img {
+    width: 100%; /* Ensures the image fills the carousel width */
+    height: 500px; /* Adjust height as needed */
+    object-fit: cover; /* Maintains aspect ratio while ensuring the image fills the height */
+  }
+</style>
+
+<center> <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://i.ibb.co/mGyr9VD/2.png" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Interstellar (2014)</h5>
+        <p>The film follows a group of astronauts who travel through a wormhole near Saturn in search of a new home for mankind.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.ibb.co/MDngCBh/1.png" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Parasite (2019)</h5>
+        <p>All unemployed, Ki-taek’s family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.ibb.co/cNSj8ZG/3.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Aliwan Paradise (1993)</h5>
+        <p>Mike De Leon’s entry into the omnibus “Southern Winds” where he follows Julio Madiaga into the new world of Filipino Entertainment.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</center>
+
+<br/>
+
+<table class="table table-dark table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Date Logged</th>
+      <th scope="col">Title</th>
+      <th scope="col">Genre</th>
+      <th scope="col">Director</th>
+      <th scope="col">Year Released</th>
+      <th scope="col">Personal Rating</th>
+      <th scope="col">Review</th>
+      <th scope="col">Would Recommend</th>
+      <th scope="col">Watch Type</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+{% if filmlogs %}
+  {% for filmlog in filmlogs %}
+  <tr>
+      <td>{{ filmlog.logged_at }}</td>
+      <td><a href="{% url 'filmlog' filmlog.id %}">{{ filmlog.film_title }}</a></td> 
+      <td>{{ filmlog.genre }}</td>
+      <td>{{ filmlog.director }}</td>
+      <td>{{ filmlog.year_of_release }}</td>
+      <td>{{ filmlog.personal_rating }}</td>
+      <td>{{ filmlog.review }}</td>
+      <td>{% if filmlog.would_recommend %}Yes{% else %}No{% endif %}</td>
+      <td>{% if filmlog.I_have_seen_this_film_before %}Rewatch{% else %}First Watch{% endif %}</td>
+      <td><a href="{% url 'filmlog' filmlog.id %}">{{ filmlog.id }}</a></td>
+  </tr>
+ 
+
+
+  {% endfor %}
+
+{% endif %}
+    
+  </tbody>
+</table>
+
+
 
 {% else %}
 
+<div class="col-md-6 offset-md-3">
 <h1> Login </h1>
 <br/>
+
 <form method="POST" action="{% url 'home' %}">
 	{% csrf_token %}
 	<form>
@@ -30,7 +123,6 @@
 
 </form>
 
-</div>
 
 {% endif %}
 

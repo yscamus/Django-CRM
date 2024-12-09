@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    YOUR FILMLOG FOR...
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"> {{ movie_log.film_title }} ({{ movie_log.year_of_release }})  </h5>
+    <p class="card-text"> Directed by {{ movie_log.director }} </p>
+   
+  </div>
+</div>
+<br/>
+<strong>Genres: </strong> {{ movie_log.genre }} <br/>
+<strong>Film Logged At: </strong> {{ movie_log.logged_at }} <br/>
+<strong>I Rate It:</strong> {{ movie_log.personal_rating }} out of 5<br/>
+<strong>Would I Recommend Watching It?: </strong> {% if movie_log.would_recommend %}Yes{% else %}No{% endif %} <br/>
+<strong> Watch Type: </strong> {% if movie_log.I_have_seen_this_film_before %}Rewatch{% else %}First Watch{% endif %} <br/><br/>
+<strong> My Review: </strong> <br/>
+
+<div class="card">
+  <div class="card-body">
+    {{ movie_log.review }}
+  </div>
+</div>
+<br/> <br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+<a href="{% url 'delete_filmlog' movie_log.id %}" class="btn btn-danger">Delete</a>
+
+<a href="{% url 'update_filmlog' movie_log.id %}" class="btn btn-dark">Update FilmLog</a>
+
+{% endblock %}
+
